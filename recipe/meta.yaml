@@ -10,8 +10,10 @@ source:
   sha256: 541f6d92993655b68404cfea60d84ce0a7644eed49dff7e7437db818127700f9
 
 build:
-  number: 0
+  number: 1
   skip: True  # [win]
+  run_exports:
+    - {{ pin_compatible('spfft', max_pin='x') }}
 
 requirements:
   build:
