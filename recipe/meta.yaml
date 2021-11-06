@@ -1,5 +1,5 @@
 {% set name = "spfft" %}
-{% set version = "1.0.4" %}
+{% set version = "1.0.5" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/eth-cscs/SpFFT/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: 7f04c0cff7dad825ec666c3a42b27583e65b6bcb8592245ecf06f96cc5a4938e
+  sha256: 43173ff813d616b36b47c4ed767e54eec74bc72c407fb89e18e4a44ffb151d89
 
 build:
   number: 0
