@@ -10,7 +10,7 @@ source:
   sha256: d4673b3135aebfa1c440723226fe976d518ff881285b3d4787f1aa8210eac81e
 
 build:
-  number: 0
+  number: 1
   skip: true  # [win]
   run_exports:
     - {{ pin_subpackage('spfft', max_pin='x') }}
@@ -19,6 +19,7 @@ requirements:
   build:
     - {{ compiler('cxx') }}
     - {{ compiler('fortran') }}
+    - {{ stdlib("c") }}
     - make
     - cmake >=3.11.0
   host:
