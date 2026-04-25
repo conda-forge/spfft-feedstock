@@ -3,20 +3,36 @@ About spfft-feedstock
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/spfft-feedstock/blob/main/LICENSE.txt)
 
+
+About spfft
+-----------
+
 Home: https://github.com/eth-cscs/SpFFT.git
 
 Package license: BSD-3-Clause
 
-Summary: Sparse 3D FFT library
+Summary: Sparse 3D FFT shared library (SpFFT)
 
 Development: https://github.com/eth-cscs/SpFFT
 
 Documentation: https://spfft.readthedocs.io/en/latest/?badge=latest
 
-SpFFT is A 3D FFT library for sparse frequency domain data written in C++ with support for MPI, OpenMP, CUDA and ROCm.
+Inspired by the need of some computational material science applications
+with spherical cutoff data in frequency domain, SpFFT provides Fast Fourier
+Transformations of sparse frequency domain data. For distributed
+computations with MPI, slab decomposition in space domain and pencil
+decomposition in frequency domain (sparse data within a pencil / column must
+be on one rank) is used.
 
-Inspired by the need of some computational material science applications with spherical cutoff data in frequency domain, SpFFT provides Fast Fourier Transformations of sparse frequency domain data. For distributed computations with MPI, slab decomposition in space domain and pencil decomposition in frequency domain (sparse data within a pencil / column must be on one rank) is used.
 
+About spfft-static
+------------------
+
+
+
+Package license: 
+
+Summary: Sparse 3D FFT static library (SpFFT)
 
 Current build status
 ====================
@@ -91,6 +107,20 @@ Current build status
                   <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/spfft-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_mpiopenmpi" alt="variant">
                 </a>
               </td>
+            </tr><tr>
+              <td>osx_arm64_mpimpich</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=12503&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/spfft-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_mpimpich" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64_mpiopenmpi</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=12503&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/spfft-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_mpiopenmpi" alt="variant">
+                </a>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -105,6 +135,7 @@ Current release info
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-spfft-green.svg)](https://anaconda.org/conda-forge/spfft) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/spfft.svg)](https://anaconda.org/conda-forge/spfft) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/spfft.svg)](https://anaconda.org/conda-forge/spfft) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/spfft.svg)](https://anaconda.org/conda-forge/spfft) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-spfft--static-green.svg)](https://anaconda.org/conda-forge/spfft-static) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/spfft-static.svg)](https://anaconda.org/conda-forge/spfft-static) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/spfft-static.svg)](https://anaconda.org/conda-forge/spfft-static) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/spfft-static.svg)](https://anaconda.org/conda-forge/spfft-static) |
 
 Installing spfft
 ================
@@ -116,16 +147,16 @@ conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `spfft` can be installed with `conda`:
+Once the `conda-forge` channel has been enabled, `spfft, spfft-static` can be installed with `conda`:
 
 ```
-conda install spfft
+conda install spfft spfft-static
 ```
 
 or with `mamba`:
 
 ```
-mamba install spfft
+mamba install spfft spfft-static
 ```
 
 It is possible to list all of the versions of `spfft` available on your platform with `conda`:
@@ -175,12 +206,12 @@ it is possible to build and upload installable packages to the
 [conda-forge](https://anaconda.org/conda-forge) [anaconda.org](https://anaconda.org/)
 channel for Linux, Windows and OSX respectively.
 
-To manage the continuous integration and simplify feedstock maintenance
+To manage the continuous integration and simplify feedstock maintenance,
 [conda-smithy](https://github.com/conda-forge/conda-smithy) has been developed.
 Using the ``conda-forge.yml`` within this repository, it is possible to re-render all of
 this feedstock's supporting files (e.g. the CI configuration files) with ``conda smithy rerender``.
 
-For more information please check the [conda-forge documentation](https://conda-forge.org/docs/).
+For more information, please check the [conda-forge documentation](https://conda-forge.org/docs/).
 
 Terminology
 ===========
@@ -207,7 +238,7 @@ merged, the recipe will be re-built and uploaded automatically to the
 everybody to install and use from the `conda-forge` channel.
 Note that all branches in the conda-forge/spfft-feedstock are
 immediately built and any created packages are uploaded, so PRs should be based
-on branches in forks and branches in the main repository should only be used to
+on branches in forks, and branches in the main repository should only be used to
 build distinct package versions.
 
 In order to produce a uniquely identifiable distribution:
@@ -222,4 +253,5 @@ Feedstock Maintainers
 
 * [@AdhocMan](https://github.com/AdhocMan/)
 * [@ltalirz](https://github.com/ltalirz/)
+* [@mkrack](https://github.com/mkrack/)
 
