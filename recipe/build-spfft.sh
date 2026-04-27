@@ -25,7 +25,7 @@ cmake -B "${BUILD_DIR}" -S . \
   -DSPFFT_GPU_DIRECT="OFF" \
   -DSPFFT_MPI="ON" \
   -DSPFFT_OMP="ON" \
-  -DSPFFT_SINGLE_PRECISION="OFF" \
+  -DSPFFT_SINGLE_PRECISION="ON" \
   -DSPFFT_STATIC="${SPFFT_STATIC}"
 cmake --build "${BUILD_DIR}" --parallel "${CPU_COUNT}"
 cmake --install "${BUILD_DIR}"
