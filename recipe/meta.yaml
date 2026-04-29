@@ -1,49 +1,92 @@
 {% set name = "spfft" %}
-{% set version = "1.1.0" %}
+{% set version = "1.1.1" %}
+
+{% set build = 0 %}
+
+{% set mpi = mpi or "openmpi" %}
+{% set mpi_prefix = "mpi_" + mpi %}
 
 package:
   name: {{ name|lower }}
-  version: {{ version }}
+  version: "{{ version }}"
 
 source:
-  url: https://github.com/eth-cscs/SpFFT/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: d4673b3135aebfa1c440723226fe976d518ff881285b3d4787f1aa8210eac81e
+  url: https://github.com/eth-cscs/spfft/archive/refs/tags/v{{ version }}.tar.gz
+  sha256: 675a048124a96b8c7f89d59d3ac0355833e28b38622e76c4d478ee91b25d766c
 
 build:
-  number: 2
-  skip: true  # [win]
-  run_exports:
-    - {{ pin_subpackage('spfft', max_pin='x') }}
+  number: {{ build }}
+  skip: True  # [win]
 
-requirements:
-  build:
-    - {{ compiler('cxx') }}
-    - {{ compiler('fortran') }}
-    - {{ stdlib("c") }}
-    - make
-    - cmake >=3.11.0
-  host:
-    - {{ mpi }}
-    - fftw
-    - libgomp      # [linux]
-    - llvm-openmp  # [osx]
-  run:
-    - {{ mpi }}
-
-test:
-  commands:
-    - test -f "${PREFIX}/lib/libspfft${SHLIB_EXT}"
+outputs:
+  - name: spfft
+    script: build-spfft.sh
+    build:
+      string: {{ mpi_prefix }}_h{{ PKG_HASH }}_{{ build }}
+      run_exports:
+        - {{ pin_subpackage("spfft", max_pin="x") }}
+    requirements:
+      build:
+        - {{ compiler("c") }}
+        - {{ stdlib("c") }}
+        - {{ compiler("cxx") }}
+        - {{ compiler("fortran") }}
+        - {{ mpi }}
+        - cmake >=3.18
+        - ninja
+        - pkg-config
+      host:
+        - {{ mpi }}
+        - fftw
+      run:
+        - {{ mpi }}
+        - fftw
+    test:
+      commands:
+        - test -f "${PREFIX}/lib/libspfft${SHLIB_EXT}"
+    about:
+      summary: Sparse 3D FFT shared library (SpFFT)
+  - name: spfft-static
+    script: build-spfft.sh
+    build:
+      string: {{ mpi_prefix }}_h{{ PKG_HASH }}_{{ build }}
+      run_exports:
+        - {{ pin_subpackage("spfft-static", max_pin="x") }}
+    requirements:
+      build:
+        - {{ compiler("c") }}
+        - {{ stdlib("c") }}
+        - {{ compiler("cxx") }}
+        - {{ compiler("fortran") }}
+        - {{ mpi }}
+        - cmake >=3.18
+        - ninja
+        - pkg-config
+      host:
+        - {{ mpi }}
+        - fftw
+      run:
+        - {{ mpi }}
+        - fftw
+    test:
+      commands:
+        - test -f "${PREFIX}/lib/libspfft.a"
+    about:
+      summary: Sparse 3D FFT static library (SpFFT)
 
 about:
   home: https://github.com/eth-cscs/SpFFT.git
   license: BSD-3-Clause
   license_family: BSD
   license_file: LICENSE
-  summary: Sparse 3D FFT library
+  summary: SpFFT is A 3D FFT library for sparse frequency domain data written in C++ with support for MPI, OpenMP, CUDA and ROCm.
   description: |
-    SpFFT is A 3D FFT library for sparse frequency domain data written in C++ with support for MPI, OpenMP, CUDA and ROCm.
-
-    Inspired by the need of some computational material science applications with spherical cutoff data in frequency domain, SpFFT provides Fast Fourier Transformations of sparse frequency domain data. For distributed computations with MPI, slab decomposition in space domain and pencil decomposition in frequency domain (sparse data within a pencil / column must be on one rank) is used.
+    Inspired by the need of some computational material science applications
+    with spherical cutoff data in frequency domain, SpFFT provides Fast Fourier
+    Transformations of sparse frequency domain data. For distributed
+    computations with MPI, slab decomposition in space domain and pencil
+    decomposition in frequency domain (sparse data within a pencil / column must
+    be on one rank) is used.
   doc_url: https://spfft.readthedocs.io/en/latest/?badge=latest
   dev_url: https://github.com/eth-cscs/SpFFT
 
@@ -51,3 +94,4 @@ extra:
   recipe-maintainers:
     - AdhocMan
     - ltalirz
+    - mkrack
